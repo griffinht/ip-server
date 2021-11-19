@@ -31,14 +31,11 @@ fn _main() -> Result<(), i32> {
     let matches = options::matches()?;
 
     return if matches.opt_present("client") {
-        client::connect()
+        client::connect(matches.opt_get::<String>("client").unwrap().unwrap())
     } else {
         server::listen(
             if matches.opt_present("server") {
-                match matches.opt_get::<String>("server") {
-                    Ok(e) => e.ok_or(1)?,
-                    Err(_) => return Err(1)
-                }
+                matches.opt_get::<String>("server").unwrap().ok_or(1)?
             } else {
                 concat!(default_bind_address!(), ":", default_port!()).to_string()
             }

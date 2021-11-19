@@ -1,3 +1,10 @@
-pub fn connect() -> Result<(), i32> {
+pub fn connect<A: std::net::ToSocketAddrs>(address: A)  -> Result<(), i32> {
+    let stream = match std::net::TcpStream::connect(address) {
+        Ok(listener) => listener,
+        Err(error) => { eprintln!("{}", error); return Err(1) }
+    };
+    eprintln!("connected");
+    eprintln!("{}, {}", stream.local_addr().unwrap(), stream.peer_addr().unwrap());
+
     return Ok(());
 }

@@ -6,7 +6,7 @@ pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
         Ok(listener) => listener,
         Err(error) => { eprintln!("{}", error); return Err(1) }
     };
-    eprintln!("Server started!");
+    eprintln!("listening");
     for stream in listener.incoming() {
         match stream {
             Ok(stream) => {
