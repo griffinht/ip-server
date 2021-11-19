@@ -2,7 +2,10 @@ use std::io::Read;
 
 pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
 
-    let listener = std::net::TcpListener::bind(address).unwrap();
+    let listener = match std::net::TcpListener::bind(address) {
+        Ok(listener) => listener,
+        Err(error) => { eprintln!("{}", error); return Err(1) }
+    };
     eprintln!("Server started!");
     for stream in listener.incoming() {
         match stream {
