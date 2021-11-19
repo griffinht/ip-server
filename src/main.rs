@@ -14,10 +14,7 @@ fn main() {
 
 fn _main() -> Result<(), i32> {
 
-    let _matches = match options::matches() {
-        Ok(matches) => matches,
-        Err(()) => return Err(1)
-    };
+    let _matches = options::matches()?;
 
     let listener = std::net::TcpListener::bind("0.0.0.0:8000").unwrap();
     eprintln!("Server started!");

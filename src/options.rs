@@ -1,4 +1,4 @@
-pub fn matches() -> std::result::Result<getopts::Matches, ()> {
+pub fn matches() -> std::result::Result<getopts::Matches, i32> {
     let arguments: Vec<String>;
 
     arguments = std::env::args().collect();
@@ -12,7 +12,7 @@ pub fn matches() -> std::result::Result<getopts::Matches, ()> {
 
     let matches = match options.parse(&arguments[1..]) {
         Ok(matches) => matches,
-        Err(fail) => { eprintln!("{}", fail); return Err(()) }
+        Err(fail) => { eprintln!("{}", fail); return Err(1); }
     };
     if matches.opt_present("h") {
         eprint!("{}", options.usage_with_format(|opts| {
@@ -22,11 +22,11 @@ pub fn matches() -> std::result::Result<getopts::Matches, ()> {
                 opts.collect::<Vec<String>>().join("\n")
             )
         }));
-        return Err(())
+        return Err(0)
     }
     if matches.opt_present("v") {
         eprintln!("{} version {}", crate::NAME, crate::VERSION);
-        return Err(())
+        return Err(0)
     }
 
     Ok(matches)
