@@ -17,15 +17,14 @@ pub fn matches() -> std::result::Result<getopts::Matches, i32> {
     if matches.opt_present("h") {
         eprint!("{}", options.usage_with_format(|opts| {
             format!(
-                "Usage: {} [options...] <command>\n{}\n",
-                crate::NAME,
+                concat!("Usage: {} [options...] <command>\n", crate::name!(), "\n"),
                 opts.collect::<Vec<String>>().join("\n")
             )
         }));
         return Err(0)
     }
     if matches.opt_present("v") {
-        eprintln!("{} version {}", crate::NAME, crate::VERSION);
+        eprintln!(concat!(crate::name!(), " version ", crate::version!()));
         return Err(0)
     }
 
