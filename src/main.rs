@@ -36,10 +36,7 @@ fn _main() -> Result<(), i32> {
         server::listen(
             if matches.opt_present("server") {
                 match matches.opt_get::<String>("server") {
-                    Ok(e) => match e {
-                        Some(string) => string,
-                        None => return Err(1)
-                    },
+                    Ok(e) => e.ok_or(1)?,
                     Err(_) => return Err(1)
                 }
             } else {
