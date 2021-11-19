@@ -37,13 +37,13 @@ fn _main() -> Result<(), i32> {
             if matches.opt_present("server") {
                 match matches.opt_get::<String>("server") {
                     Ok(e) => match e {
-                        Some(_) => "234",
+                        Some(string) => string,
                         None => return Err(1)
                     },
                     Err(_) => return Err(1)
                 }
             } else {
-                concat!(default_bind_address!(), ":", default_port!())
+                concat!(default_bind_address!(), ":", default_port!()).to_string()
             }
         )
     }
