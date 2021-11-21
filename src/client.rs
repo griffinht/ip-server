@@ -1,28 +1,19 @@
 use std::io::{Read, Write};
-use std::net::TcpStream;
 
 pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
-    let mut stream = match std::net::TcpStream::connect(address) {
-        Ok(listener) => listener,
-        Err(error) => { eprintln!("{}", error); return Err(1) }
-    };
+    match _connect(address) {
+        Ok(()) => Ok(()),
+        Err(error) => { eprintln!("error :(n{}", error); Err(1) }
+    }
+}
+
+fn _connect<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
+    let mut stream = std::net::TcpStream::connect(address)?;
 
     eprintln!("connected to {}", stream.peer_addr().unwrap());
 
-    match stream.write(&[0u8, 1] ) {
-        Ok(_) => {}
-        Err(error) => { eprintln!("error writing\n{}", error); return Err(1) }
-    };
-    match read(stream) {
-        Ok(_) => {}
-        Err(error) => { eprintln!("error reading\n{}", error); return Err(1) }
-    };
+    stream.write(&[0u8, 1] )?;
 
-
-    return Ok(());
-}
-
-fn read(mut stream: TcpStream) -> std::io::Result<()> {
     let address_type = &mut [0u8, 1];
     stream.read_exact(address_type)?;
     match address_type[0] {
