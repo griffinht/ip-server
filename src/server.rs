@@ -22,11 +22,11 @@ fn get_raw(address: std::net::IpAddr) -> std::io::Result<Vec<u8>> {
     let mut response: Vec<u8> = Vec::new();
     match address {
         std::net::IpAddr::V4(ip) => {
-            response.extend_from_slice(&[0u8, 0] ); //ipv4
+            response.extend_from_slice(&[0u8] ); //ipv4
             response.extend_from_slice(&ip.octets()) //4 bytes
         },
         std::net::IpAddr::V6(ip) => {
-            response.extend_from_slice(&[0u8, 1] ); //ipv6
+            response.extend_from_slice(&[1u8] ); //ipv6
             response.extend_from_slice(&ip.octets()) //16 bytes
         }
     };
