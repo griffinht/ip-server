@@ -17,7 +17,7 @@ pub fn matches() -> std::result::Result<getopts::Matches, i32> {
     if matches.opt_present("h") {
         eprint!("{}", options.usage_with_format(|opts| {
             format!(
-                concat!("Usage: ", crate::name!(), " [options...] <command>\n{}\n"),
+                concat!("Usage: ", crate::name!(), " [options...]\n{}\n"),
                 opts.collect::<Vec<String>>().join("\n")
             )
         }));
