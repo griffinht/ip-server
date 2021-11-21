@@ -2,33 +2,25 @@ use std::io::{Read, Write};
 use std::net::TcpStream;
 
 pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
+    match _connect(address) {
+        Ok(()) => Ok(()),
+        Err(error) => { eprintln!("error :(n{}", error); Err(1) }
+    }
+}
 
-    let listener = match std::net::TcpListener::bind(address) {
-        Ok(listener) => listener,
-        Err(error) => { eprintln!("{}", error); return Err(1) }
-    };
+fn _listen<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
+    let listener = std::net::TcpListener::bind(address)?;
     eprintln!("listening on {}", listener.local_addr().unwrap());
     for stream in listener.incoming() {
-        match stream {
-            Ok(mut stream) => {
-                let protocol = &mut [0u8; 1];
-                match stream.read_exact(protocol) {
-                    Ok(_) => {}
-                    Err(_) => {}
-                }
-                match match protocol[0] {
-                    0 => { write_raw(stream) }
-                    _ => { write_http(stream) }
-                } {
-                    Ok(()) => {}
-                    Err(error) => { eprintln!("error {}", error); return Err(1) }
-                }
-
-            },
-            Err(e) => { eprintln!("Connection failed: {}", e); return Err(1) }
-        }
+        let mut stream = stream?;
+        let protocol = &mut [0u8; 1];
+        stream.read_exact(protocol)?;
+        match protocol[0] {
+            0 => { write_raw(stream) }
+            _ => { write_http(stream) }
+        }?;
     }
-    return Ok(());
+    Ok(())
 }
 
 fn write_raw(mut stream: TcpStream) -> std::io::Result<()> {
