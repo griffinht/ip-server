@@ -41,6 +41,6 @@ fn _main() -> Result<(), i32> {
         )
     } {
         Ok(()) => Ok(()),
-        Err(error) => { eprintln!("error\n{}", error); Err(1) }
+        Err(error) => { eprintln!("{}", error); Err(2) }
     }
 }
