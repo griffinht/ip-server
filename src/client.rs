@@ -1,4 +1,4 @@
-use std::io::Read;
+use std::io::{Read, Write};
 
 pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
     let mut stream = match std::net::TcpStream::connect(address) {
@@ -7,6 +7,8 @@ pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
     };
 
     eprintln!("connected to {}", stream.peer_addr().unwrap());
+
+    stream.write(&[0u8, 1] );
 
     let buffer = &mut [0u8; 4];
     match stream.read_exact(buffer) {
