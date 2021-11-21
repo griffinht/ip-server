@@ -7,8 +7,8 @@ pub fn matches() -> std::result::Result<getopts::Matches, i32> {
 
     options.optflag("h", "help", "print help");
     options.optflag("v", "version", "print version");
-    options.optopt("c", "client", "run as client, connect to address (default port :9999)", "<address>");
-    options.optopt("s", "server", "run as server, bind to address (default 0.0.0.0:9999)", "<address>");
+    options.optopt("c", "client", concat!("run as client, connect to address (default port :", crate::default_port!(), ")"), "<address>");
+    options.optopt("s", "server", concat!("run as server, bind to address (default ", crate::default_bind_address!(), crate::default_port!(), ")"), "<address>");
 
     let matches = match options.parse(&arguments[1..]) {
         Ok(matches) => matches,
