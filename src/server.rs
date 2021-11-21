@@ -1,4 +1,4 @@
-use std::io::{Read, Write};
+use std::io::{Write};
 
 pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
 
@@ -12,10 +12,14 @@ pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
             Ok(mut stream) => {
                 let peer_address = stream.peer_addr().unwrap();
                 eprintln!("{}", peer_address);
-                match stream.write(match peer_address.ip() {
-                    std::net::IpAddr::V4(ip) => stream.write(&*ip.octets()),
-                    std::net::IpAddr::V6(ip) => stream.write(&*ip.octets())
-                }) {
+                match match peer_address.ip() {
+                    std::net::IpAddr::V4(ip) => {
+                        stream.write(&ip.octets())
+                    },
+                    std::net::IpAddr::V6(ip) => {
+                        stream.write(&ip.octets())
+                    }
+                } {
                     Ok(b) => { eprintln!("wrote {}", b)}
                     Err(error) => { eprintln!("error {}", error) }
                 }
