@@ -2,9 +2,12 @@ FROM rust as build
 
 WORKDIR /usr/src/rust-ip
 
-COPY . .
+COPY Cargo.toml .
 # cache dependencies
-RUN cargo fetch
+RUN mkdir .cargo
+RUN cargo vendor > .cargo/config
+# build
+COPY ./src src
 RUN cargo build
 
 FROM debian
