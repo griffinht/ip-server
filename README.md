@@ -27,5 +27,5 @@ $ firefox localhost:8000
 run as client, connect to address (default port :8000)
 #
 -s, --server <address>
-run as server, bind to address (default 0.0.0.0:8000) [options...] <command>
+run as server, bind to address (default 0.0.0.0:8000)
 #
