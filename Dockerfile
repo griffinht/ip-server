@@ -9,7 +9,7 @@ RUN cargo vendor > .cargo/config
 # build
 COPY ./src src
 RUN cargo build --release
-COPY target/release/rust-ip /rust-ip
+RUN ln -s $(cd ./target/release/; pwd)/rust-ip /rust-ip
 
 FROM debian
 
