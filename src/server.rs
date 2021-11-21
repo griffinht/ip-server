@@ -10,16 +10,37 @@ pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
     for stream in listener.incoming() {
         match stream {
             Ok(mut stream) => {
+                let mut headers: Vec<u8> = Vec::new();
+                let mut body: Vec<u8> = Vec::new();
+
                 let peer_address = stream.peer_addr().unwrap();
                 eprintln!("{}", peer_address);
-                match match peer_address.ip() {
+                match peer_address.ip() {
                     std::net::IpAddr::V4(ip) => {
-                        stream.write(&ip.octets())
+                        body.extend_from_slice(ip.to_string().as_bytes())
                     },
                     std::net::IpAddr::V6(ip) => {
-                        stream.write(&ip.octets())
+                        body.extend_from_slice(ip.to_string().as_bytes())
                     }
-                } {
+                }
+/*                match peer_address.ip() {
+                    std::net::IpAddr::V4(ip) => {
+                        body.extend_from_slice(&ip.octets())
+                    },
+                    std::net::IpAddr::V6(ip) => {
+                        body.extend_from_slice(&ip.octets())
+                    }
+                }*/
+
+                headers.extend_from_slice("HTTP/1.1 200 OK\r\nContent-Type: text/plain;\r\nContent-Length: ".as_bytes());
+                headers.extend_from_slice(body.len().to_string().as_bytes());
+                headers.extend_from_slice("\r\n\r\n".as_bytes());
+
+                match stream.write(&headers) {
+                    Ok(b) => { eprintln!("wrote {}", b)}
+                    Err(error) => { eprintln!("error {}", error) }
+                }
+                match stream.write(&body) {
                     Ok(b) => { eprintln!("wrote {}", b)}
                     Err(error) => { eprintln!("error {}", error) }
                 }
