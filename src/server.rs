@@ -32,16 +32,20 @@ pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
 }
 
 fn write_raw(mut stream: TcpStream) -> std::io::Result<()> {
+    let mut response: Vec<u8> = Vec::new();
     let peer_address = stream.peer_addr().unwrap();
     eprintln!("{}", peer_address);
     match peer_address.ip() {
         std::net::IpAddr::V4(ip) => {
-            eprintln!("wrote {}", stream.write(&ip.octets())?);
+            response.extend_from_slice(&[0u8, 0] );
+            response.extend_from_slice(&ip.octets())
         },
         std::net::IpAddr::V6(ip) => {
-            eprintln!("wrote {}", stream.write(&ip.octets())?);
+            response.extend_from_slice(&[0u8, 1] );
+            response.extend_from_slice(&ip.octets())
         }
-    }
+    };
+    eprintln!("wrote {}", stream.write(&response)?);
     Ok(())
 }
 
