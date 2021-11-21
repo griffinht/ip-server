@@ -19,13 +19,18 @@ $ firefox localhost:8000
 ```
 ![firefox](firefox.png)
 ## Usage
--h, --help          print help
+`-h, --help`
+
+print help
 #
--v, --version       print version
+`-v, --version`
+
+print version
 #
--c, --client <address>
+`-c, --client <address>`
+
 run as client, connect to address (default port :8000)
 #
--s, --server <address>
+`-s, --server <address>`
+
 run as server, bind to address (default 0.0.0.0:8000)
-#
