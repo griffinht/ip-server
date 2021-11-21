@@ -8,10 +8,10 @@ RUN mkdir .cargo
 RUN cargo vendor > .cargo/config
 # build
 COPY ./src src
-RUN cargo build
+RUN cargo build --release
 
 FROM debian
 
-COPY --from=build /usr/src/rust-ip/target/debug/rust-ip /usr/local/bin/rust-ip
+COPY --from=build /usr/src/rust-ip/target/release/rust-ip /usr/local/bin/rust-ip
 
 ENTRYPOINT rust-ip
