@@ -1,5 +1,5 @@
 # rust-ip
-similar to [icanhazip.com](icanhazip.com)
+similar to [icanhazip.com](https://icanhazip.com)
 ## Example
 ```
 $ rust-ip
