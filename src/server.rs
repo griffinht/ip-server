@@ -1,13 +1,6 @@
 use std::io::{Read, Write};
 
-pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
-    match _listen(address) {
-        Ok(()) => Ok(()),
-        Err(error) => { eprintln!("error :(\n{}", error); Err(1) }
-    }
-}
-
-fn _listen<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
+pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
     let listener = std::net::TcpListener::bind(address)?;
     eprintln!("listening on {}", listener.local_addr().unwrap());
     for stream in listener.incoming() {

@@ -27,10 +27,9 @@ fn main() {
 }
 
 fn _main() -> Result<(), i32> {
-
     let matches = options::matches()?;
 
-    return if matches.opt_present("client") {
+    match if matches.opt_present("client") {
         client::connect(matches.opt_get::<String>("client").unwrap().unwrap())
     } else {
         server::listen(
@@ -40,5 +39,8 @@ fn _main() -> Result<(), i32> {
                 concat!(default_bind_address!(), ":", default_port!()).to_string()
             }
         )
+    } {
+        Ok(()) => Ok(()),
+        Err(error) => { eprintln!("error\n{}", error); Err(1) }
     }
 }

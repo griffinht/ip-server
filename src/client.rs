@@ -1,13 +1,6 @@
 use std::io::{Read, Write};
 
-pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
-    match _connect(address) {
-        Ok(()) => Ok(()),
-        Err(error) => { eprintln!("error :(n{}", error); Err(1) }
-    }
-}
-
-fn _connect<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
+pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
     let mut stream = std::net::TcpStream::connect(address)?;
 
     eprintln!("connected to {}", stream.peer_addr().unwrap());
