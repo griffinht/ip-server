@@ -2,7 +2,7 @@ use std::io::{Read, Write};
 use std::net::TcpStream;
 
 pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
-    match _connect(address) {
+    match _listen(address) {
         Ok(()) => Ok(()),
         Err(error) => { eprintln!("error :(n{}", error); Err(1) }
     }
