@@ -8,9 +8,13 @@ pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
 
     eprintln!("connected to {}", stream.peer_addr().unwrap());
 
-    let buf = &mut [];
-    match stream.read(buf) {
-        Ok(size) => { eprintln!("{}", size) }
+    let buffer = &mut [0u8; 4];
+    match stream.read_exact(buffer) {
+        Ok(()) => {
+            eprintln!("read");
+            let address = std::net::IpAddr::from(*buffer);
+            eprintln!("{}", address.to_string())
+        }
         Err(error) => { eprintln!("{}", error); return Err(1) }
     };
 
