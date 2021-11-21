@@ -4,7 +4,7 @@ use std::net::TcpStream;
 pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
     match _listen(address) {
         Ok(()) => Ok(()),
-        Err(error) => { eprintln!("error :(n{}", error); Err(1) }
+        Err(error) => { eprintln!("error :(\n{}", error); Err(1) }
     }
 }
 
@@ -17,7 +17,8 @@ fn _listen<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
         stream.read_exact(protocol)?;
         match protocol[0] {
             0 => { write_raw(stream) }
-            _ => { write_http(stream) }
+            71 => { write_http(stream) } //71 represents ASCII letter G which is sent from an HTTP GET request
+            _ => { return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, "unknown protocol")); }
         }?;
     }
     Ok(())
