@@ -1,0 +1,20 @@
+services:
+  server:
+    image: rust-ip
+    build:
+      context:
+        .
+    ports:
+      - 8000:8000
+  client:
+    image: rust-ip
+    build:
+      context:
+        .
+    entrypoint: rust-ip
+    command: "-c server:8000"
+    depends_on:
+      server:
+        condition:
+          service_started
+    restart: unless-stopped
