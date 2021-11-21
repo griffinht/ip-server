@@ -37,14 +37,14 @@ fn get_http(address: std::net::IpAddr) -> std::io::Result<Vec<u8>> {
     let mut headers: Vec<u8> = Vec::new();
     let mut body: Vec<u8> = Vec::new();
 
-    match address {
+    body.extend_from_slice(match address {
         std::net::IpAddr::V4(ip) => {
-            body.extend_from_slice(ip.to_string().as_bytes());
+            ip.to_string()
         },
         std::net::IpAddr::V6(ip) => {
-            body.extend_from_slice(ip.to_string().as_bytes());
+            ip.to_string()
         }
-    }
+    }.as_bytes());
 
     headers.extend_from_slice("HTTP/1.1 200 OK\r\nContent-Type: text/plain;\r\nContent-Length: ".as_bytes());
     headers.extend_from_slice(body.len().to_string().as_bytes());
