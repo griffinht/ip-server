@@ -3,8 +3,6 @@ use std::io::{Read, Write};
 pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
     let mut stream = std::net::TcpStream::connect(address)?;
 
-    eprintln!("connected to {}", stream.peer_addr().unwrap());
-
     stream.write(&[0u8, 1] )?;
 
     let address_type = &mut [0u8, 1];
@@ -21,7 +19,7 @@ pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
             std::net::IpAddr::from(*buffer)
         }
         _ => {
-            return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, "unknown address type"))
+            return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, concat!("bad protocol: unknown address type (is this a ", crate::name!(), " server?)")))
         }
     };
     println!("{}", ipaddr.to_string());

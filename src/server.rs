@@ -12,7 +12,7 @@ pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
         stream.write(&match protocol[0] {
             0 => { get_raw(address) }
             71 => { get_http(address) } //71 represents ASCII letter G which is sent from an HTTP GET request
-            _ => { return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, "unknown protocol")); }
+            _ => { return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, "bad protocol: must be rust-ip or HTTP GET")); }
         }?)?;
     }
     Ok(())
