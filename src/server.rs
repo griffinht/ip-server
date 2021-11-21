@@ -1,5 +1,4 @@
 use std::io::{Read, Write};
-use std::net::TcpStream;
 
 pub fn listen<A: std::net::ToSocketAddrs>(address: A) -> Result<(), i32> {
     match _listen(address) {
@@ -13,22 +12,22 @@ fn _listen<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
     eprintln!("listening on {}", listener.local_addr().unwrap());
     for stream in listener.incoming() {
         let mut stream = stream?;
+        let address = stream.peer_addr().unwrap().ip();
+        println!("{}", address);
         let protocol = &mut [0u8; 1];
         stream.read_exact(protocol)?;
-        match protocol[0] {
-            0 => { write_raw(stream) }
-            71 => { write_http(stream) } //71 represents ASCII letter G which is sent from an HTTP GET request
+        stream.write(&match protocol[0] {
+            0 => { get_raw(address) }
+            71 => { get_http(address) } //71 represents ASCII letter G which is sent from an HTTP GET request
             _ => { return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, "unknown protocol")); }
-        }?;
+        }?)?;
     }
     Ok(())
 }
 
-fn write_raw(mut stream: TcpStream) -> std::io::Result<()> {
+fn get_raw(address: std::net::IpAddr) -> std::io::Result<Vec<u8>> {
     let mut response: Vec<u8> = Vec::new();
-    let peer_address = stream.peer_addr().unwrap();
-    eprintln!("{}", peer_address);
-    match peer_address.ip() {
+    match address {
         std::net::IpAddr::V4(ip) => {
             response.extend_from_slice(&[0u8, 0] );
             response.extend_from_slice(&ip.octets())
@@ -38,17 +37,14 @@ fn write_raw(mut stream: TcpStream) -> std::io::Result<()> {
             response.extend_from_slice(&ip.octets())
         }
     };
-    eprintln!("wrote {}", stream.write(&response)?);
-    Ok(())
+    Ok(response)
 }
 
-fn write_http(mut stream: TcpStream) -> std::io::Result<()> {
+fn get_http(address: std::net::IpAddr) -> std::io::Result<Vec<u8>> {
     let mut headers: Vec<u8> = Vec::new();
     let mut body: Vec<u8> = Vec::new();
 
-    let peer_address = stream.peer_addr().unwrap();
-    eprintln!("{}", peer_address);
-    match peer_address.ip() {
+    match address {
         std::net::IpAddr::V4(ip) => {
             body.extend_from_slice(ip.to_string().as_bytes());
         },
@@ -61,8 +57,8 @@ fn write_http(mut stream: TcpStream) -> std::io::Result<()> {
     headers.extend_from_slice(body.len().to_string().as_bytes());
     headers.extend_from_slice("\r\n\r\n".as_bytes());
 
-    eprintln!("wrote {}", stream.write(&headers)?);
-    eprintln!("wrote {}", stream.write(&body)?);
+    let mut response = headers;
+    response.extend_from_slice(&body);
 
-    Ok(())
+    Ok(response)
 }
