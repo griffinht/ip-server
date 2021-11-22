@@ -1,5 +1,0 @@
-services:
-  cargo:
-    image: ip-server-cargo
-    context:
-      todo

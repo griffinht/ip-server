@@ -1,0 +1,11 @@
+name: docker
+on: workflow_dispatch
+jobs:
+  docker:
+    name: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: build and push to docker registry
+        run: ./ci/cargo/docker/publish.sh ${{ secrets.docker_registry_user }} ${{ secrets.docker_registry_password }}
