@@ -8,4 +8,4 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: build and push to docker registry
-        run: ls -l && ls -l ./ci && ls -l ./ci/cargo/docker && ./ci/cargo/docker/publish.sh ${{ secrets.DOCKER_REGISTRY_USER }} ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+        run: ./ci/docker/publish.sh ${{ secrets.DOCKER_REGISTRY_USER }} ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
