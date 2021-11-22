@@ -1,9 +1,20 @@
 [package]
 name = "ip-server"
 version = "0.1.0"
+authors = ["stzups"]
+license = "Unlicense"
+description = "simple server that returns client ip address"
+readme = "README.md"
+homepage = "https://github.com/stzups/ip-server"
+repository = "https://github.com/stzups/ip-server"
+keywords = ["cli", "search", "demo"]
+categories = ["command-line-utilities"]
+
 edition = "2018"
+
 [[bin]]
 name = "ip-server"
 path = "src/main.rs"
+
 [dependencies]
 getopts = "0.2.21"
