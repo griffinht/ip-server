@@ -1,13 +1,13 @@
-# rust-ip
+# ip-server
 similar to [icanhazip.com](https://icanhazip.com)
 ## Example
 ```
-$ rust-ip
+$ ip-server
 listening on 0.0.0.0:8000
 ```
-Now that the server is running on port 8000, we can connect via `rust-ip` or an HTTP client with a `GET` request
+Now that the server is running on port 8000, we can connect via `ip-server` or an HTTP client with a `GET` request
 ```
-$ rust-ip --client localhost:8000
+$ ip-server --client localhost:8000
 127.0.0.1
 ```
 ```
@@ -38,6 +38,6 @@ make sure to use fully qualified hostname and port (e.g. `localhost:8000` instea
 
 run as server, bind to address (default 0.0.0.0:8000)
 
-server will handle both `rust-ip -c` and HTTP GET requests (like from `curl`)
+server will handle both `rip-server -c` and HTTP GET requests (like from `curl`)
 
 server will also print client addresses to `stdout` with a newline

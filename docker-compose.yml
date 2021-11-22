@@ -1,17 +1,17 @@
 services:
   server:
-    image: rust-ip
+    image: ip-server
     build:
       context:
         .
     ports:
       - 8000:8000
   client:
-    image: rust-ip
+    image: ip-server
     build:
       context:
         .
-    entrypoint: rust-ip
+    entrypoint: ip-server
     command: "-c server:8000"
     depends_on:
       server:

@@ -4,7 +4,7 @@ mod client;
 
 #[macro_export]
 macro_rules! name {
-    () => ("rust-ip")
+    () => ("ip-server")
 }
 #[macro_export]
 macro_rules! version {

@@ -1,6 +1,6 @@
 FROM rust as build
 
-WORKDIR /usr/src/rust-ip
+WORKDIR /usr/src/ip-server
 
 COPY Cargo.toml .
 # cache dependencies
@@ -9,13 +9,13 @@ RUN cargo vendor > .cargo/config
 # build
 COPY ./src src
 RUN cargo build --release
-RUN ln -s $(cd ./target/release/; pwd)/rust-ip /rust-ip
+RUN ln -s $(cd ./target/release/; pwd)/rust-ip /ip-server
 
 # to use in other docker images
-# COPY --from=rust-ip /rust-ip /usr/local/bin/rust-ip
+# COPY --from=rust-ip /ip-server /usr/local/bin/ip-server
 
 FROM gcr.io/distroless/cc
 
-COPY --from=build /rust-ip /usr/local/bin/rust-ip
+COPY --from=build /ip-server /usr/local/bin/ip-server
 
-ENTRYPOINT ["rust-ip"]
+ENTRYPOINT ["ip-server"]

@@ -1,9 +1,9 @@
 [package]
-name = "rust-ip"
+name = "ip-server"
 version = "0.1.0"
 edition = "2018"
 [[bin]]
-name = "rust-ip"
+name = "ip-server"
 path = "src/main.rs"
 [dependencies]
 getopts = "0.2.21"
