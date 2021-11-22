@@ -8,7 +8,8 @@ COPY Cargo.toml .
 COPY ./src src
 RUN cargo build --release
 
-COPY cargo/publish.sh .
+# README.md needed for cargo publish
 COPY README.md .
 
+COPY ci/cargo/publish.sh .
 CMD "./publish.sh"
