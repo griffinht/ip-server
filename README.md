@@ -38,6 +38,6 @@ make sure to use fully qualified hostname and port (e.g. `localhost:8000` instea
 
 run as server, bind to address (default 0.0.0.0:8000)
 
-server will handle both `rip-server -c` and HTTP GET requests (like from `curl`)
+server will handle both `ip-server -c` and HTTP GET requests (like from `curl`)
 
 server will also print client addresses to `stdout` with a newline
