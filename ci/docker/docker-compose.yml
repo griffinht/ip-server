@@ -1,0 +1,17 @@
+# production/testing docker-compose.yml
+services:
+  server:
+    image: stzups/ip-server:0.1.1
+    ports:
+      - 8000:8000
+    healthcheck:
+
+  client:
+    image: stzups/ip-server:0.1.1
+    entrypoint: ip-server
+    command: "-c server:8000"
+    depends_on:
+      server:
+        condition:
+          service_started
+    restart: unless-stopped
