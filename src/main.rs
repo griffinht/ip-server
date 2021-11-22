@@ -8,7 +8,7 @@ macro_rules! name {
 }
 #[macro_export]
 macro_rules! version {
-    () => ("0.1.0")
+    () => ("0.1.1")
 }
 #[macro_export]
 macro_rules! default_bind_address {
