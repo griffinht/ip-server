@@ -11,11 +11,11 @@ COPY ./src src
 RUN cargo build --release
 RUN ln -s $(cd ./target/release/; pwd)/rust-ip /rust-ip
 
-FROM debian
+# to use in other docker images
+# COPY --from=rust-ip /rust-ip /usr/local/bin/rust-ip
+
+FROM gcr.io/distroless/cc
 
 COPY --from=build /rust-ip /usr/local/bin/rust-ip
 
-ENTRYPOINT rust-ip
-
-# to use in other docker files
-# COPY --from=rust-ip /rust-ip rust-ip
+ENTRYPOINT ["rust-ip"]
