@@ -1,4 +1,6 @@
 #!/bin/bash
 
-cargo login todo
+TOKEN=$1
+
+cargo login "$TOKEN"
 cargo publish

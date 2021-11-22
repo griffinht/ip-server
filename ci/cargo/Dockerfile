@@ -12,4 +12,4 @@ RUN cargo build --release
 COPY README.md .
 
 COPY ci/cargo/publish.sh .
-CMD "./publish.sh"
+ENTRYPOINT ["sh", "-c", "./publish.sh $CARGO_TOKEN"]

@@ -2,4 +2,4 @@
 
 cd ../..
 docker build . -f ci/cargo/Dockerfile --tag ip-server-cargo:latest
-docker run ip-server-cargo
+docker run -e "CARGO_TOKEN=$1" ip-server-cargo
