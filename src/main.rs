@@ -3,14 +3,6 @@ mod server;
 mod client;
 
 #[macro_export]
-macro_rules! name {
-    () => ("ip-server")
-}
-#[macro_export]
-macro_rules! version {
-    () => ("0.1.1")
-}
-#[macro_export]
 macro_rules! default_bind_address {
     () => ("0.0.0.0")
 }

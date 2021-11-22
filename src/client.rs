@@ -19,7 +19,7 @@ pub fn connect<A: std::net::ToSocketAddrs>(address: A) -> std::io::Result<()> {
             std::net::IpAddr::from(*buffer)
         }
         _ => {
-            return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, concat!("bad protocol: unknown address type (is this a ", crate::name!(), " server?)")))
+            return Err(std::io::Error::new(std::io::ErrorKind::InvalidData, concat!("bad protocol: unknown address type (is this a ", env!("CARGO_PKG_NAME"), " server?)")))
         }
     };
     println!("{}", ipaddr.to_string());
