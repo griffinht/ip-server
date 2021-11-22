@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
-REGISTRY_PASSWORD=todo
-REGISTRY_USER=stzups
+USER=$1
+PASSWORD=$2
 
 docker build . --tag ip-server:latest
-echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin
-docker push stzups/ip-server:latest
+echo "$PASSWORD" | docker login -u "$USER" --password-stdin
+docker push "$USER"/ip-server:latest
