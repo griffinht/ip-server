@@ -2,18 +2,18 @@ name: build, publish, image, and test
 on: workflow_dispatch
 jobs:
   #todo get cargo version and create tag and release
-  cargo:
-    name: build and publish cargo crate
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: builds cargo package and publishes cargo package to crates.io
-        run: ./ci/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
+#  cargo:
+#    name: build and publish cargo crate
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v2
+#      - name: builds cargo package and publishes cargo package to crates.io
+#        run: ./ci/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
   docker:
     name: build and push docker image
     runs-on: ubuntu-latest
-    needs: cargo
+ #   needs: cargo
     steps:
       - name: checkout
         uses: actions/checkout@v2
