@@ -27,4 +27,4 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: test image from hub.docker.com as server and client
-        run: /bin/bash -c "/ci/docker/test-server-client.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./ci/cargo-metadata.sh name) $(./ci/cargo-metadata.sh version)"
+        run: /bin/bash -c "/ci/test/test-server-client.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./ci/cargo-metadata.sh name) $(./ci/cargo-metadata.sh version)"
