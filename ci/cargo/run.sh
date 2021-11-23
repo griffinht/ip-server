@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-TOKEN=$1
+CARGO_TOKEN=$1
 
 docker build . -f ./ci/cargo/Dockerfile --tag cargo-docker:latest
-docker run -e "CARGO_TOKEN=$TOKEN" cargo-docker:latest
+docker run -e "CARGO_TOKEN=$CARGO_TOKEN" cargo-docker:latest
