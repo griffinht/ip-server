@@ -16,7 +16,7 @@ if [[ "$VERSION" == "$OLD_VERSION" ]]; then
 fi
 
 sed -i "s/$OLD_VERSION/$VERSION/g" Cargo.toml
-exit 0
+
 git tag "$VERSION"
 git add Cargo.toml
 git commit -m "version $OLD_VERSION -> $VERSION"
