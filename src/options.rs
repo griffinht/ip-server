@@ -29,16 +29,23 @@ pub fn matches(arguments: Vec<String>) -> std::result::Result<getopts::Matches, 
 }
 
 mod tests {
+    macro_rules! to_string_vec {
+        ($str:expr) => ({
+            $str.iter().map(|s:&&str | s.to_string()).collect()
+        });
+    }
     #[test]
     fn matches() -> std::result::Result<(), i32> {
-        macro_rules! vec_of_strings {
-            ($str:expr) => ({
-                $str.iter().map(|s:&&str | s.to_string()).collect()
-            });
-        }
-        crate::options::matches(vec_of_strings!([]))?;
-        crate::options::matches(vec_of_strings!(["asd"]))?;
-        crate::options::matches(vec_of_strings!(["asd", "sdf"]))?;
+        crate::options::matches(to_string_vec!(["asd"]))?;
+        crate::options::matches(to_string_vec!(["asd"]))?;
+        crate::options::matches(to_string_vec!(["asd", "sdf"]))?;
         Ok(())
+    }
+    #[test]
+    #[should_panic]
+    fn no_program_first_arg() {
+        match crate::options::matches(to_string_vec!([])) {
+            _ => {}
+        };
     }
 }
