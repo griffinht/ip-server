@@ -55,3 +55,15 @@ fn get_http(address: std::net::IpAddr) -> Vec<u8> {
 
     return response;
 }
+
+#[cfg(test)]
+mod test {
+    use std::str::FromStr;
+    use super::*;
+
+    #[test]
+    fn test() {
+        assert_eq!(*get_raw(std::net::IpAddr::from_str("127.0.0.1").unwrap()), [0, 127, 0, 0, 1]);
+        assert_eq!(*get_http(std::net::IpAddr::from_str("127.0.0.1").unwrap()), *"HTTP/1.1 200 OK\r\nContent-Type: text/plain;\r\nContent-Length: 9\r\n\r\n127.0.0.1".as_bytes());
+    }
+}
