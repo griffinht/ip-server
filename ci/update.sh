@@ -20,4 +20,4 @@ exit 0
 git tag "$VERSION"
 git add Cargo.toml
 git commit -m "version $OLD_VERSION -> $VERSION"
-git push --tags
+git push origin --tags

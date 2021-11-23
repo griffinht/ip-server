@@ -1,5 +1,8 @@
 name: build, publish, image, and test
-on: workflow_dispatch
+on:
+  push:
+    tags:
+      - '*'
 jobs:
 #todo get cargo version and create tag and release
   cargo:
