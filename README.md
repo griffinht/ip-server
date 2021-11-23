@@ -41,3 +41,34 @@ run as server, bind to address (default 0.0.0.0:8000)
 server will handle both `ip-server -c` and HTTP GET requests (like from `curl`)
 
 server will also print client addresses to `stdout` with a newline
+## Installation
+### via cargo
+```
+$ cargo install ip-server
+```
+make sure the cargo install directory is in your `$PATH`
+```
+$ ip-server
+listening on 0.0.0.0:8000
+```
+```
+$ ip-server --client localhost:8000
+127.0.0.1
+```
+### via docker
+```
+$ docker run -p 8000:8000 stzups/ip-server:latest
+listening on 0.0.0.0:8000
+```
+```
+$ docker run --network=host stzups/ip-server:latest --client localhost:8000
+172.17.0.1
+```
+### in a  Dockerfile
+```
+FROM whatever can rust a simple rust binary
+COPY --from=stzups/ip-server:latest /ip-server /usr/local/bin/ip-server
+ENTRYPOINT ["ip-server"]
+```
+### via your favorite package manager
+coming soon :)
