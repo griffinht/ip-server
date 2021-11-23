@@ -1,6 +1,7 @@
 name: build, publish, image, and test
 on: workflow_dispatch
 jobs:
+  #todo get cargo version and create tag and release
   cargo:
     name: build and publish cargo crate
     runs-on: ubuntu-latest
@@ -17,7 +18,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: builds docker image by installing cargo binary from crates.io then pushes docker image to hub.docker.com
-        run: ./cd/docker/build-and-push.sh ${{ secrets.DOCKER_REGISTRY_USER }} ip-server latest ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+        run: ./cd/docker/build-and-push.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./cd/get-metadata.sh name) $(./cd/get-metadata.sh version) ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
   test:
     name: test docker image
     runs-on: ubuntu-latest
@@ -26,4 +27,4 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: test image from hub.docker.com as server and client
-        run: ./cd/docker/test-server-client.sh ${{ secrest.DOCKER_REGISTRY_USER }} ip-server latest
+        run: ./cd/docker/test-server-client.sh ${{ secrest.DOCKER_REGISTRY_USER }} $(./cd/get-metadata.sh name) $(./cd/get-metadata.sh version)
