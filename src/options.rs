@@ -38,14 +38,23 @@ mod tests {
         });
     }
     #[test]
-    fn test_arguments() -> std::result::Result<(), i32> {
+    fn test_missing_first_argument() {
         assert_eq!(matches(to_string_vec!([])), Err(1));
+    }
+    #[test]
+    fn test_no_argument() -> std::result::Result<(), i32> {
         matches(to_string_vec!([""]))?;
+        Ok(())
+    }
+    #[test]
+    fn test_missing_value() {
+        assert_eq!(matches(to_string_vec!(["", "-c"])), Err(1));
+    }
+    #[test]
+    fn test_special_flags() {
         assert_eq!(matches(to_string_vec!(["", "-h"])), Err(0));
         assert_eq!(matches(to_string_vec!(["", "--help"])), Err(0));
         assert_eq!(matches(to_string_vec!(["", "-v"])), Err(0));
         assert_eq!(matches(to_string_vec!(["", "--version"])), Err(0));
-        assert_eq!(matches(to_string_vec!(["", "-c"])), Err(1));
-        Ok(())
     }
 }
