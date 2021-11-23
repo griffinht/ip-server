@@ -29,6 +29,8 @@ pub fn matches(arguments: Vec<String>) -> std::result::Result<getopts::Matches, 
 }
 
 mod tests {
+    use super::*;
+
     macro_rules! to_string_vec {
         ($str:expr) => ({
             $str.iter().map(|s:&&str | s.to_string()).collect::<Vec<String>>()
@@ -36,18 +38,18 @@ mod tests {
     }
     #[test]
     fn test_arguments() -> std::result::Result<(), i32> {
-        crate::options::matches(to_string_vec!([""]))?;
-        assert_eq!(crate::options::matches(to_string_vec!(["", "-h"])), Err(0));
-        assert_eq!(crate::options::matches(to_string_vec!(["", "--help"])), Err(0));
-        assert_eq!(crate::options::matches(to_string_vec!(["", "-v"])), Err(0));
-        assert_eq!(crate::options::matches(to_string_vec!(["", "--version"])), Err(0));
-        assert_eq!(crate::options::matches(to_string_vec!(["", "-c"])), Err(1));
+        matches(to_string_vec!([""]))?;
+        assert_eq!(matches(to_string_vec!(["", "-h"])), Err(0));
+        assert_eq!(matches(to_string_vec!(["", "--help"])), Err(0));
+        assert_eq!(matches(to_string_vec!(["", "-v"])), Err(0));
+        assert_eq!(matches(to_string_vec!(["", "--version"])), Err(0));
+        assert_eq!(matches(to_string_vec!(["", "-c"])), Err(1));
         Ok(())
     }
     #[test]
     #[should_panic]
     fn test_missing_first_arguments() {
-        match crate::options::matches(to_string_vec!([])) {
+        match matches(to_string_vec!([])) {
             _ => {}
         };
     }
