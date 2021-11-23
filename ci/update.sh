@@ -20,4 +20,4 @@ sed -i "s/$OLD_VERSION/$VERSION/g" Cargo.toml
 git tag "$VERSION"
 git add Cargo.toml
 git commit -m "version $OLD_VERSION -> $VERSION"
-git push origin --tags
+git push --atomic origin
