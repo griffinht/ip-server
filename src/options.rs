@@ -31,7 +31,7 @@ pub fn matches(arguments: Vec<String>) -> std::result::Result<getopts::Matches, 
 mod tests {
     macro_rules! to_string_vec {
         ($str:expr) => ({
-            $str.iter().map(|s:&&str | s.to_string()).collect()
+            $str.iter().map(|s:&&str | s.to_string()).collect::<Vec<String>>()
         });
     }
     #[test]
