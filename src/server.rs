@@ -62,8 +62,12 @@ mod test {
     use super::*;
 
     #[test]
-    fn test() {
+    fn test_get_raw() {
         assert_eq!(*get_raw(std::net::IpAddr::from_str("127.0.0.1").unwrap()), [0, 127, 0, 0, 1]);
+    }
+
+    #[test]
+    fn test_get_http() {
         assert_eq!(*get_http(std::net::IpAddr::from_str("127.0.0.1").unwrap()), *"HTTP/1.1 200 OK\r\nContent-Type: text/plain;\r\nContent-Length: 9\r\n\r\n127.0.0.1".as_bytes());
     }
 }
