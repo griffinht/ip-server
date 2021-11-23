@@ -35,7 +35,7 @@ mod tests {
         });
     }
     #[test]
-    fn matches() -> std::result::Result<(), i32> {
+    fn test_arguments() -> std::result::Result<(), i32> {
         crate::options::matches(to_string_vec!([""]))?;
         assert_eq!(crate::options::matches(to_string_vec!(["", "-h"])), Err(0));
         assert_eq!(crate::options::matches(to_string_vec!(["", "--help"])), Err(0));
@@ -46,7 +46,7 @@ mod tests {
     }
     #[test]
     #[should_panic]
-    fn no_program_first_arg() {
+    fn test_missing_first_arguments() {
         match crate::options::matches(to_string_vec!([])) {
             _ => {}
         };
