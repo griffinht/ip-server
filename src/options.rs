@@ -7,6 +7,7 @@ pub fn matches(arguments: Vec<String>) -> std::result::Result<getopts::Matches, 
     options.optopt("c", "client", "run as client, connect to address", "<address>");
     options.optopt("s", "server", concat!("run as server, bind to address (default ", crate::default_bind_address!(), ":", crate::default_port!(), ")"), "<address>");
 
+    if arguments.len() == 0 { eprintln!("missing program name from argv"); return Err(1); }
     let matches = match options.parse(&arguments[1..]) {
         Ok(matches) => matches,
         Err(fail) => { eprintln!("{}", fail); return Err(1); }
@@ -38,6 +39,7 @@ mod tests {
     }
     #[test]
     fn test_arguments() -> std::result::Result<(), i32> {
+        assert_eq!(matches(to_string_vec!([])), Err(1));
         matches(to_string_vec!([""]))?;
         assert_eq!(matches(to_string_vec!(["", "-h"])), Err(0));
         assert_eq!(matches(to_string_vec!(["", "--help"])), Err(0));
@@ -45,12 +47,5 @@ mod tests {
         assert_eq!(matches(to_string_vec!(["", "--version"])), Err(0));
         assert_eq!(matches(to_string_vec!(["", "-c"])), Err(1));
         Ok(())
-    }
-    #[test]
-    #[should_panic]
-    fn test_missing_first_arguments() {
-        match matches(to_string_vec!([])) {
-            _ => {}
-        };
     }
 }
