@@ -36,9 +36,12 @@ mod tests {
     }
     #[test]
     fn matches() -> std::result::Result<(), i32> {
-        crate::options::matches(to_string_vec!(["asd"]))?;
-        crate::options::matches(to_string_vec!(["asd"]))?;
-        crate::options::matches(to_string_vec!(["asd", "sdf"]))?;
+        crate::options::matches(to_string_vec!([""]))?;
+        assert_eq!(crate::options::matches(to_string_vec!(["", "-h"])), Err(0));
+        assert_eq!(crate::options::matches(to_string_vec!(["", "--help"])), Err(0));
+        assert_eq!(crate::options::matches(to_string_vec!(["", "-v"])), Err(0));
+        assert_eq!(crate::options::matches(to_string_vec!(["", "--version"])), Err(0));
+        assert_eq!(crate::options::matches(to_string_vec!(["", "-c"])), Err(1));
         Ok(())
     }
     #[test]
