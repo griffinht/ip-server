@@ -1,6 +1,8 @@
 name: build, publish, image, and test
 on:
   push:
+    branches:
+      - 'master'
     tags:
       - '*'
 jobs:
