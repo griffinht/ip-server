@@ -9,7 +9,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: builds cargo package and publishes cargo package to crates.io
-        run: ./cd/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
+        run: ./ci/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
   docker:
     name: build and push docker image
     runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: builds docker image by installing cargo binary from crates.io then pushes docker image to hub.docker.com
-        run: /bin/bash -c ./cd/docker/build-and-push.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./cd/get-metadata.sh name) $(./cd/get-metadata.sh version) ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+        run: /bin/bash -c ./ci/docker/build-and-push.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./ci/get-metadata.sh name) $(./ci/get-metadata.sh version) ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
   test:
     name: test docker image
     runs-on: ubuntu-latest
@@ -27,4 +27,4 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: test image from hub.docker.com as server and client
-        run: ./bin/bash -c /cd/docker/test-server-client.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./cd/get-metadata.sh name) $(./cd/get-metadata.sh version)
+        run: ./bin/bash -c /ci/docker/test-server-client.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./ci/get-metadata.sh name) $(./ci/get-metadata.sh version)
