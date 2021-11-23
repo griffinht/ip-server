@@ -1,28 +1,28 @@
 name: build, publish, image, and test
 on: workflow_dispatch
 jobs:
-  #todo get cargo version and create tag and release
-#  cargo:
-#    name: build and publish cargo crate
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: checkout
-#        uses: actions/checkout@v2
-#      - name: builds cargo package and publishes cargo package to crates.io
-#        run: ./ci/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
-#  docker:
-#    name: build and push docker image
-#    runs-on: ubuntu-latest
-#    needs: cargo
-#    steps:
-#      - name: checkout
-#        uses: actions/checkout@v2
-#      - name: builds docker image by installing cargo binary from crates.io then pushes docker image to hub.docker.com
-#        run: /bin/bash -c "./ci/docker/build-and-push.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./ci/cargo-metadata.sh name) $(./ci/cargo-metadata.sh version) ${{ secrets.DOCKER_REGISTRY_PASSWORD }}"
+#todo get cargo version and create tag and release
+  cargo:
+    name: build and publish cargo crate
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: builds cargo package and publishes cargo package to crates.io
+        run: ./ci/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
+  docker:
+    name: build and push docker image
+    runs-on: ubuntu-latest
+    needs: cargo
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: builds docker image by installing cargo binary from crates.io then pushes docker image to hub.docker.com
+        run: /bin/bash -c "./ci/docker/build-and-push.sh ${{ secrets.DOCKER_REGISTRY_USER }} $(./ci/cargo-metadata.sh name) $(./ci/cargo-metadata.sh version) ${{ secrets.DOCKER_REGISTRY_PASSWORD }}"
   test:
     name: test docker image
     runs-on: ubuntu-latest
-#    needs: docker
+    needs: docker
     steps:
       - name: checkout
         uses: actions/checkout@v2
