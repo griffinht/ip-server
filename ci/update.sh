@@ -17,8 +17,7 @@ fi
 
 sed -i "s/$OLD_VERSION/$VERSION/g" Cargo.toml
 
-git tag "$VERSION"
 git add Cargo.toml
 git commit -m "version $OLD_VERSION -> $VERSION"
-git push origin
+git tag "$VERSION"
 git push origin --tag
