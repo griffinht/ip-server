@@ -1,7 +1,4 @@
-pub fn matches() -> std::result::Result<getopts::Matches, i32> {
-    let arguments: Vec<String>;
-
-    arguments = std::env::args().collect();
+pub fn matches(arguments: Vec<String>) -> std::result::Result<getopts::Matches, i32> {
 
     let mut options = getopts::Options::new();
 
@@ -29,4 +26,19 @@ pub fn matches() -> std::result::Result<getopts::Matches, i32> {
     }
 
     Ok(matches)
+}
+
+mod tests {
+    #[test]
+    fn matches() -> std::result::Result<(), i32> {
+        macro_rules! vec_of_strings {
+            ($str:expr) => ({
+                $str.iter().map(|s:&&str | s.to_string()).collect()
+            });
+        }
+        crate::options::matches(vec_of_strings!([]))?;
+        crate::options::matches(vec_of_strings!(["asd"]))?;
+        crate::options::matches(vec_of_strings!(["asd", "sdf"]))?;
+        Ok(())
+    }
 }

@@ -19,7 +19,7 @@ fn main() {
 }
 
 fn _main() -> Result<(), i32> {
-    let matches = options::matches()?;
+    let matches = options::matches(std::env::args().collect())?;
 
     match if matches.opt_present("client") {
         client::connect(matches.opt_get::<String>("client").unwrap().unwrap())
