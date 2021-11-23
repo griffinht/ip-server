@@ -29,7 +29,8 @@ pub fn matches(arguments: Vec<String>) -> std::result::Result<getopts::Matches, 
     Ok(matches)
 }
 
-mod tests {
+#[cfg(test)]
+mod test {
     use super::*;
 
     macro_rules! to_string_vec {
