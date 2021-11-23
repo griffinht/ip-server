@@ -1,5 +1,6 @@
 #!/bin/bash
 # starts server and connects client to server
+# see exit code for result
 USER=$1
 NAME=$2
 VERSION=$3
