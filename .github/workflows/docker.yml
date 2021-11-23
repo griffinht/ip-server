@@ -1,11 +1,27 @@
-name: docker
+name: build-publish-image-test
 on: workflow_dispatch
 jobs:
-  docker:
-    name: docker
+  build-publish:
+    name: build-publish
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: build and push to docker registry
+      - name: builds cargo package and publishes to crates.io
+        run: ./ci/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
+  image:
+    name: image
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: builds docker image by installing cargo binary from crates.io then pushes docker image to hub.docker.com
         run: ./ci/docker/build-and-push.sh ${{ secrets.DOCKER_REGISTRY_USER }} ip-server latest ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: test image from hub.docker.com as server and client
+        run: ./ci/docker/test-server-client.sh ${{ secrest.DOCKER_REGISTRY_USER }} ip-server latest
