@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 # starts server and connects client to server
 # see exit code for result
 USER=$1
