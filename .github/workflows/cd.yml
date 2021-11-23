@@ -9,7 +9,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
       - name: builds cargo package and publishes cargo package to crates.io
-        run: ./cd/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
+        run: ./cd/cargo/run.sh ${{ secrets.CARGO_TOKEN }} $(./cd/get-metadata.sh name) $(./cd/get-metadata.sh version)
   docker:
     name: build and push docker image
     runs-on: ubuntu-latest
