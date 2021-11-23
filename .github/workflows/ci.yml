@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: builds cargo package and publishes to crates.io
+      - name: builds cargo package and publishes cargo package to crates.io
         run: ./ci/cargo/run.sh ${{ secrets.CARGO_TOKEN }}
   docker:
     name: build and push docker image
