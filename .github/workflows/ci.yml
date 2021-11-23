@@ -4,7 +4,6 @@ on:
     tags:
       - '*'
 jobs:
-#todo get cargo version and create tag and release
   cargo:
     name: build and publish cargo crate
     runs-on: ubuntu-latest
