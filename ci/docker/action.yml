@@ -1,0 +1,26 @@
+name: 'docker'
+description: 'build and push docker image'
+inputs:
+  docker-registry-user:
+    description: 'user for docker registry'
+    required: true
+  name:
+    description: 'name of docker image'
+    required: true
+  version:
+    description: 'version tag of docker image'
+    default: 'latest'
+    required: false
+  docker-registry:
+    description: 'url to docker registry, defaults to hub.docker.com'
+    required: false
+    default: 'hub.docker.com'
+  docker-registry-password:
+    description: 'password for docker registry'
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: run
+      shell: bash
+      run: /bin/bash -c "./ci/docker/build-and-push.sh ${{ github.event.inputs.docker-registry-user }} ${{ github.event.inputs.name }} ${{ github.event.inputs.version }} ${{ github.event.inputs.password }}"
