@@ -7,5 +7,7 @@ VERSION=$3
 PASSWORD=$4
 
 docker build --build-arg CARGO_VERSION="$VERSION" -f ./ci/docker/Dockerfile --tag "$USER/$NAME:$VERSION" .
-echo "$PASSWORD" | docker login -u "$USER" --password-stdin
-docker push "$USER"/"$NAME":"$VERSION"
+if [ -z "$PASSWORD" ]; then
+  echo "$PASSWORD" | docker login -u "$USER" --password-stdin
+fi
+docker push "$USER/$NAME:$VERSION"

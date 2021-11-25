@@ -3,5 +3,7 @@ set -e
 
 TOKEN=$1
 
-cargo login "$TOKEN"
-cargo publish
+if [ -z "$TOKEN" ]; then
+  cargo login "$TOKEN"
+fi
+cargo publish --allow-dirty
