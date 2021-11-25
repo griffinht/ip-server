@@ -7,7 +7,7 @@ COPY Cargo.toml .
 COPY README.md .
 COPY LICENSE .
 
-RUN mv "$(cargo deb)" /ip-server.deb
+RUN ln -s "$(cargo deb)" /ip-server.deb
 
 FROM debian
 
