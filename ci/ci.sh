@@ -11,4 +11,4 @@ PASSWORD=$5
 
 ./ci/docker/build-and-push.sh "$USER" "$NAME" "$VERSION" "$PASSWORD"
 
-./ci/test/test-server-client.sh "$USER" "$NAME" "$VERSION"
+./ci/test/test-server-client.sh "$USER/$NAME:$VERSION"
