@@ -9,8 +9,12 @@ homepage = "https://github.com/stzups/ip-server"
 repository = "https://github.com/stzups/ip-server"
 keywords = ["cli", "ip", "server", "http"]
 categories = ["command-line-utilities"]
-
 edition = "2018"
+include = [
+    "Cargo.toml",
+    "src",
+    "README.md"
+]
 
 [[bin]]
 name = "ip-server"
