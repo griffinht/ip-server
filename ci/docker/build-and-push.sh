@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-USER=$1
-NAME=$2
-VERSION=$3
-PASSWORD=$4
+IMAGE=$1
+DOCKER_REGISTRY_USER=$2
+DOCKER_REGISTRY_PASSWORD=$3
 
-docker build --build-arg CARGO_VERSION="$VERSION" -f ./ci/docker/Dockerfile --tag "$USER/$NAME:$VERSION" .
-if [ -n "$PASSWORD" ]; then
-  echo "$PASSWORD" | docker login -u "$USER" --password-stdin
+docker build -f ./ci/docker/Dockerfile --tag "$IMAGE" .
+if [ -n "$DOCKER_REGISTRY_PASSWORD" ]; then
+  echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USER" --password-stdin
 fi
-docker push "$USER/$NAME:$VERSION"
+
+docker push "$IMAGE"

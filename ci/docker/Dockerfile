@@ -1,10 +1,8 @@
-# production dockerfile
 FROM rust as build
 
-ARG CARGO_VERSION
-
-RUN cargo install ip-server --version "${CARGO_VERSION}"
-
+COPY src src
+COPY Cargo.toml .
+RUN cargo install --path .
 RUN ln -s /usr/local/cargo/bin/ip-server ip-server
 
 FROM gcr.io/distroless/cc
