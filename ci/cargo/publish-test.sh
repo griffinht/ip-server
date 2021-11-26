@@ -3,5 +3,9 @@ set -e
 
 CARGO_TOKEN=$1
 
-docker build . -f ./ci/cargo/Dockerfile --tag ip-server-cargo:latest --build-arg "CARGO_TOKEN=$CARGO_TOKEN"
-./ci/test/test-server-client.sh ip-server-cargo:latest
+docker build . -f ./ci/cargo/publish/Dockerfile --tag ip-server-cargo-publish:latest
+printf "\n\n\nn\n\n$CARGO_TOKEN"
+docker run --rm ip-server-cargo-publish:latest "$CARGO_TOKEN"
+
+docker build . -f ./ci/cargo/install/Dockerfile --tag ip-server-cargo-install:latest --build-arg "VERSION=$(./ci/cargo-metadata.sh version)"
+./ci/test/test-server-client.sh ip-server-cargo-install:latest
