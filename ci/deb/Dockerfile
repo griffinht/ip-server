@@ -1,3 +1,4 @@
+# package as deb
 FROM rust as build
 
 RUN cargo install cargo-deb
@@ -9,6 +10,7 @@ COPY LICENSE .
 
 RUN ln -s "$(cargo deb)" /ip-server.deb
 
+# install and run packaged deb
 FROM debian
 
 COPY --from=build /ip-server.deb .
