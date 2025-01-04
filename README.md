@@ -1,4 +1,4 @@
-test
+![Crates.io Version](https://img.shields.io/crates/v/ip-server)
 
 # ip-server
 similar to [icanhazip.com](https://icanhazip.com)
